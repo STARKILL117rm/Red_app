@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Reporte Práctica – Mis Contactos</title>
+  <style>
+    /* ─── FUENTES ─────────────────────────────────────────────── */
+    @import url('https://fonts.googleapis.com/css2?family=Times+New+Roman&display=swap');
+
+    /* ─── RESET / BASE ───────────────────────────────────────── */
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: "Times New Roman", Times, serif;
+      font-size: 12pt;
+      color: #000;
+      background: #fff;
+    }
+
+    /* ─── PÁGINA (para impresión) ─────────────────────────────── */
+    @page {
+      size: Letter;
+      margin: 2.5cm 2cm 2.5cm 2.5cm;
+    }
+
+    .page {
+      width: 21.59cm;
+      min-height: 27.94cm;
+      margin: 0 auto;
+      padding: 2.5cm 2cm 2.5cm 2.5cm;
+      page-break-after: always;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    /* ─── PORTADA ─────────────────────────────────────────────── */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+      text-align: center;
+      position: relative;
+    }
+
+    .cover-corner {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-style: solid;
+      border-width: 0 80px 80px 0;
+      border-color: transparent #e8b4b8 transparent transparent;
+    }
+
+    .cover-uni {
+      font-size: 13pt;
+      letter-spacing: 1px;
+      margin-top: 60px;
+    }
+
+    .cover-title {
+      font-size: 22pt;
+      font-weight: bold;
+      line-height: 1.35;
+      margin-top: 40px;
+    }
+
+    .cover-subtitle {
+      font-size: 14pt;
+      font-weight: bold;
+      margin-top: 20px;
+    }
+
+    .cover-data {
+      text-align: left;
+      margin-top: 50px;
+      width: 80%;
+    }
+
+    .cover-data p {
+      font-size: 12pt;
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .cover-data strong {
+      font-weight: bold;
+    }
+
+    .cover-footer {
+      font-size: 12pt;
+      margin-bottom: 20px;
+    }
+
+    /* ─── TIPOGRAFÍA GENERAL ─────────────────────────────────── */
+    h1 {
+      font-size: 16pt;
+      font-weight: bold;
+      margin: 18px 0 10px;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 13pt;
+      font-weight: bold;
+      margin: 16px 0 8px;
+    }
+
+    h3 {
+      font-size: 12pt;
+      font-weight: bold;
+      margin: 12px 0 6px;
+    }
+
+    p {
+      text-align: justify;
+      line-height: 1.7;
+      margin-bottom: 10px;
+    }
+
+    ul,
+    ol {
+      margin-left: 24px;
+      margin-bottom: 10px;
+    }
+
+    li {
+      line-height: 1.7;
+      margin-bottom: 4px;
+    }
+
+    /* ─── SEPARADOR ──────────────────────────────────────────── */
+    hr {
+      border: none;
+      border-top: 1px solid #555;
+      margin: 18px 0;
+    }
+
+    /* ─── ÍNDICE ─────────────────────────────────────────────── */
+    .toc-item {
+      display: flex;
+      justify-content: space-between;
+      border-bottom: 1px dotted #999;
+      margin-bottom: 6px;
+      font-size: 12pt;
+    }
+
+    /* ─── FIGURAS ────────────────────────────────────────────── */
+    figure {
+      margin: 18px auto;
+      text-align: center;
+      page-break-inside: avoid;
+    }
+
+    figure img {
+      max-width: 100%;
+      max-height: 380px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      object-fit: contain;
+    }
+
+    figcaption {
+      font-size: 10pt;
+      margin-top: 6px;
+      font-style: italic;
+      color: #333;
+    }
+
+    /* figura doble (par de imágenes lado a lado) */
+    .fig-pair {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin: 18px auto;
+      page-break-inside: avoid;
+    }
+
+    .fig-pair figure {
+      flex: 1;
+      margin: 0;
+    }
+
+    .fig-pair figure img {
+      max-height: 320px;
+      width: 100%;
+    }
+
+    /* ─── CÓDIGO ─────────────────────────────────────────────── */
+    pre {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 10px 14px;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 9pt;
+      overflow-x: auto;
+      margin: 12px 0;
+      page-break-inside: avoid;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ─── TABLA ──────────────────────────────────────────────── */
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin: 14px 0;
+      font-size: 11pt;
+    }
+
+    th {
+      background: #222;
+      color: #fff;
+      padding: 7px 10px;
+      text-align: left;
+    }
+
+    td {
+      border: 1px solid #ccc;
+      padding: 6px 10px;
+      vertical-align: top;
+    }
+
+    tr:nth-child(even) td {
+      background: #f9f9f9;
+    }
+
+    /* ─── CAJA INFORMATIVA ───────────────────────────────────── */
+    .info-box {
+      background: #eef4ff;
+      border-left: 4px solid #3b6fd4;
+      padding: 10px 14px;
+      margin: 14px 0;
+      font-size: 11pt;
+      line-height: 1.6;
+    }
+
+    /* ─── IMPRESIÓN ──────────────────────────────────────────── */
+    @media print {
+      body {
+        font-size: 11pt;
+      }
+
+      pre {
+        font-size: 8.5pt;
+      }
+
+      .page {
+        padding: 0;
+        width: auto;
+      }
+
+      .no-print {
+        display: none;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+     PORTADA
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <div class="cover">
+      <div class="cover-corner"></div>
+
+      <p class="cover-uni">UNIVERSIDAD POLITÉCNICA DE PACHUCA</p>
+
+      <div>
+        <p class="cover-title">PROGRAMACIÓN MÓVIL</p>
+        <p class="cover-subtitle">
+          REPORTE DE PRÁCTICA:<br>
+          APLICACIÓN DE CONTACTOS CON<br>
+          SINCRONIZACIÓN OFFLINE Y API REST EN LARAVEL
+        </p>
+      </div>
+
+      <div class="cover-data">
+        <p><strong>DOCENTE:</strong> Miguel Angel Montoya Cerro</p>
+        <p><strong>ALUMNO:</strong> Jesus Alberto Moreno Cortes</p>
+        <p><strong>ASIGNATURA:</strong> Programación Móvil</p>
+        <p><strong>GRUPO:</strong> SFTW_08_01</p>
+        <p><strong>FECHA:</strong> 18 de junio de 2026</p>
+      </div>
+
+      <p class="cover-footer">Ingeniería en Software</p>
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     ÍNDICE
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>Índice</h1>
+    <hr>
+    <div class="toc-item"><span>1. Introducción y Objetivos</span><span>3</span></div>
+    <div class="toc-item"><span>2. Arquitectura del Sistema</span><span>3</span></div>
+    <div class="toc-item"><span>3. Descripción de los Endpoints REST (Laravel)</span><span>4</span></div>
+    <div class="toc-item"><span>4. Persistencia Local y Cola de Sincronización (Android)</span><span>5</span></div>
+    <div class="toc-item"><span>5. Relación Polimórfica (users ↔ images)</span><span>6</span></div>
+    <div class="toc-item"><span>6. Evidencias del Funcionamiento</span><span>7</span></div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.1 Entorno Docker</span><span>7</span></div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.2 API REST – Postman (GET, POST, PUT)</span><span>7</span></div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.3 Aplicación Android (modo online)</span><span>8</span></div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.4 Modo Offline – Creación de Contacto sin
+        Internet</span><span>9</span></div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.5 Base de Datos Local y Cola de Sincronización</span><span>10</span>
+    </div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.6 Sincronización Automática al Reconectarse</span><span>11</span>
+    </div>
+    <div class="toc-item"><span>&nbsp;&nbsp;&nbsp;6.7 Tabla images – Relación Polimórfica en
+        PostgreSQL</span><span>12</span></div>
+    <div class="toc-item"><span>7. Conclusiones</span><span>13</span></div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 1 – INTRODUCCIÓN
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>1. Introducción y Objetivos</h1>
+    <hr>
+
+    <p>
+      La presente práctica tiene como objetivo el desarrollo de un sistema móvil híbrido que integra una
+      base de datos local desconectada (<em>Local-First</em>) con una API REST publicada en Laravel y
+      ejecutada dentro de contenedores Docker. La aplicación móvil (<strong>contactos_app</strong>),
+      desarrollada en Android Studio con Kotlin y Jetpack Compose, se sincroniza de manera asíncrona
+      con el backend (<strong>red_app</strong>).
+    </p>
+
+    <h2>Objetivos específicos</h2>
+    <ul>
+      <li>Consumir correctamente los cinco endpoints REST del API: <code>GET</code>, <code>POST</code>,
+        <code>PUT/PATCH</code> y <code>DELETE</code> sobre el recurso <code>/api/users</code>.
+      </li>
+      <li>Garantizar la persistencia local de contactos mediante <strong>Room SQLite</strong> antes de
+        cualquier envío a la API.</li>
+      <li>Implementar una <strong>cola de sincronización</strong> mediante WorkManager que opere en
+        segundo plano y permita el modo offline.</li>
+      <li>Sincronizar automáticamente los datos pendientes al restablecerse la conexión a Internet.</li>
+      <li>Implementar una <strong>relación polimórfica</strong> en Laravel entre los modelos
+        <code>User</code> e <code>Image</code> mediante migraciones y Eloquent.
+      </li>
+    </ul>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 2 – ARQUITECTURA
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>2. Arquitectura del Sistema</h1>
+    <hr>
+
+    <p>
+      El sistema adopta el patrón <strong>MVVM (Model-View-ViewModel)</strong> en Android y el patrón
+      <strong>Resource / Controller</strong> en Laravel, comunicándose a través de HTTP/JSON mediante
+      la librería Retrofit2.
+    </p>
+
+    <h2>Tecnologías utilizadas</h2>
+    <table>
+      <tr>
+        <th>Capa</th>
+        <th>Tecnología</th>
+        <th>Función</th>
+      </tr>
+      <tr>
+        <td>UI</td>
+        <td>Jetpack Compose</td>
+        <td>Interfaz declarativa reactiva</td>
+      </tr>
+      <tr>
+        <td>Estado</td>
+        <td>StateFlow / ViewModel</td>
+        <td>Gestión reactiva del estado</td>
+      </tr>
+      <tr>
+        <td>Base de datos local</td>
+        <td>Room (SQLite)</td>
+        <td>Persistencia offline de contactos</td>
+      </tr>
+      <tr>
+        <td>Red</td>
+        <td>Retrofit2 + OkHttp3</td>
+        <td>Llamadas HTTP a la API REST</td>
+      </tr>
+      <tr>
+        <td>Sincronización</td>
+        <td>WorkManager</td>
+        <td>Tareas en segundo plano con restricción de red</td>
+      </tr>
+      <tr>
+        <td>Backend</td>
+        <td>Laravel 11 (PHP 8)</td>
+        <td>API REST con Eloquent ORM</td>
+      </tr>
+      <tr>
+        <td>Base de datos remota</td>
+        <td>PostgreSQL 18</td>
+        <td>Persistencia de usuarios e imágenes</td>
+      </tr>
+      <tr>
+        <td>Contenedores</td>
+        <td>Docker / Laravel Sail</td>
+        <td>Entorno de ejecución del backend</td>
+      </tr>
+    </table>
+
+    <h2>Flujo general</h2>
+    <div class="info-box">
+      <strong>Escritura (Create / Update / Delete):</strong><br>
+      1 → El usuario realiza una acción en la UI<br>
+      2 → <code>ContactRepository</code> guarda el cambio en Room inmediatamente (ID negativo si es offline)<br>
+      3 → Se encola una <code>SyncAction</code> en estado <code>PENDING</code><br>
+      4 → <code>SyncScheduler.syncNow()</code> activa el <code>SyncWorker</code> vía WorkManager<br>
+      5 → Si hay red: el worker envía la petición REST y marca la acción como <code>DONE</code><br>
+      6 → Si no hay red: WorkManager reintenta automáticamente al detectar conectividad<br>
+      <br>
+      <strong>Lectura:</strong><br>
+      La UI observa un <code>Flow&lt;List&lt;Contact&gt;&gt;</code> de Room. Al reconectarse,
+      <code>NetworkMonitor</code> dispara <code>syncWithApi()</code> para actualizar la BD local con
+      los datos remotos.
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 3 – ENDPOINTS
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>3. Descripción de los Endpoints REST (Laravel)</h1>
+    <hr>
+
+    <p>
+      La API está definida en <code>routes/api.php</code> mediante un <code>Route::resource</code>
+      que expone los cinco endpoints requeridos. Las respuestas son serializadas por
+      <code>UserResource</code> sin envoltura adicional gracias a
+      <code>JsonResource::withoutWrapping()</code>.
+    </p>
+
+    <table>
+      <tr>
+        <th>Método</th>
+        <th>Ruta</th>
+        <th>Acción</th>
+        <th>Código de Respuesta</th>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/api/users</td>
+        <td>Listar todos los contactos (con imagen polimórfica)</td>
+        <td>200 OK</td>
+      </tr>
+      <tr>
+        <td>GET</td>
+        <td>/api/users/{id}</td>
+        <td>Obtener un contacto específico</td>
+        <td>200 OK</td>
+      </tr>
+      <tr>
+        <td>POST</td>
+        <td>/api/users</td>
+        <td>Crear nuevo contacto</td>
+        <td>201 Created</td>
+      </tr>
+      <tr>
+        <td>PUT</td>
+        <td>/api/users/{id}</td>
+        <td>Actualizar contacto completo</td>
+        <td>200 OK</td>
+      </tr>
+      <tr>
+        <td>PATCH</td>
+        <td>/api/users/{id}</td>
+        <td>Actualización parcial del contacto</td>
+        <td>200 OK</td>
+      </tr>
+      <tr>
+        <td>DELETE</td>
+        <td>/api/users/{id}</td>
+        <td>Eliminar contacto e imagen asociada</td>
+        <td>204 No Content</td>
+      </tr>
+    </table>
+
+    <h2>Modelo de respuesta JSON (GET /api/users)</h2>
+    <pre>{
+  "id": 17,
+  "name": "Viviana",
+  "email": "vivihernandez@gmail.com",
+  "phone_number": "7718954521",
+  "image_url": null,
+  "created_at": "2026-06-18T01:00:58.000000Z",
+  "updated_at": "2026-06-18T01:00:58.000000Z"
+}</pre>
+
+    <h2>Relación polimórfica en la respuesta</h2>
+    <p>
+      El campo <code>image_url</code> es resuelto mediante carga ansiosa (<em>eager loading</em>)
+      de la relación <code>image</code> en el controlador:
+    </p>
+    <pre>// UserController.php
+public function index()
+{
+    return UserResource::collection(User::with('image')->get());
+}
+
+// UserResource.php
+'image_url' => $this->whenLoaded('image', fn() => $this->image?->url),</pre>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 4 – PERSISTENCIA LOCAL
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>4. Persistencia Local y Cola de Sincronización (Android)</h1>
+    <hr>
+
+    <h2>Estrategia de IDs Negativos (Offline)</h2>
+    <p>
+      Para evitar colisiones entre los IDs autoincrementales del servidor PostgreSQL y los
+      registros creados offline, se implementó la siguiente estrategia en
+      <code>ContactRepository.kt</code>:
+    </p>
+    <pre>// Generar ID negativo local para evitar conflictos con IDs remotos
+val minId = contactDao.getMinId() ?: 0L
+val localId = if (minId &lt; 0) minId - 1 else -1L
+val contactWithLocalId = contact.copy(id = localId)
+contactDao.insertContact(contactWithLocalId)</pre>
+
+    <p>
+      Un contacto creado offline recibe el ID <code>-1</code>, el siguiente <code>-2</code>, y así
+      sucesivamente. Cuando el <code>SyncWorker</code> lo sube exitosamente a la API, captura el ID
+      definitivo del servidor y reemplaza la fila local:
+    </p>
+    <pre>// SyncWorker.kt — Promoción de ID local negativo → ID remoto positivo
+val created = api.createUser(dto)
+val remoteId = created.id
+if (remoteId != null && remoteId != contact.id) {
+    contactDao.deleteContact(contact)               // borra la fila con id=-1
+    contactDao.insertContact(contact.copy(id = remoteId)) // inserta con id=17
+    syncDao.updateContactLocalId(contact.id, remoteId)    // actualiza la cola
+}
+syncDao.markAsDone(action.id)</pre>
+
+    <h2>Tabla de Cola de Sincronización (<code>sync_actions</code>)</h2>
+    <table>
+      <tr>
+        <th>Columna</th>
+        <th>Tipo</th>
+        <th>Descripción</th>
+      </tr>
+      <tr>
+        <td>id</td>
+        <td>Long (PK)</td>
+        <td>Identificador autoincremental</td>
+      </tr>
+      <tr>
+        <td>contactLocalId</td>
+        <td>Long</td>
+        <td>ID del contacto (negativo si es offline)</td>
+      </tr>
+      <tr>
+        <td>action</td>
+        <td>String</td>
+        <td>Tipo de operación: CREATE, UPDATE o DELETE</td>
+      </tr>
+      <tr>
+        <td>status</td>
+        <td>String</td>
+        <td>Estado: PENDING → DONE o FAILED</td>
+      </tr>
+      <tr>
+        <td>retryCount</td>
+        <td>Int</td>
+        <td>Número de reintentos fallidos</td>
+      </tr>
+      <tr>
+        <td>createdAt</td>
+        <td>Long</td>
+        <td>Timestamp para orden cronológico de ejecución</td>
+      </tr>
+    </table>
+
+    <h2>Detección automática de conectividad</h2>
+    <p>
+      El <code>NetworkMonitor</code> encapsula un <code>ConnectivityManager.NetworkCallback</code>
+      en un <code>StateFlow&lt;Boolean&gt;</code>. El <code>ContactViewModel</code> lo observa y
+      cuando transiciona de <code>false</code> → <code>true</code> lanza
+      <code>SyncScheduler.syncNow()</code> de manera automática, sin intervención del usuario.
+    </p>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 5 – POLIMORFISMO
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>5. Relación Polimórfica (users ↔ images)</h1>
+    <hr>
+
+    <p>
+      La relación polimórfica permite que la tabla <code>images</code> almacene imágenes asociadas a
+      cualquier modelo del sistema (actualmente <code>User</code>), sin necesidad de crear una tabla
+      de imágenes por cada entidad.
+    </p>
+
+    <h2>Migración de la tabla <code>images</code></h2>
+    <pre>Schema::create('images', function (Blueprint $table) {
+    $table->id();
+    $table->string('url');
+    $table->morphs('imageable'); // genera: imageable_id (BigInt) + imageable_type (String)
+    $table->timestamps();
+});</pre>
+
+    <h2>Modelo <code>User</code> — Relación <code>morphOne</code></h2>
+    <pre>// app/Models/User.php
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
+public function image(): MorphOne
+{
+    return $this->morphOne(Image::class, 'imageable');
+}</pre>
+
+    <h2>Modelo <code>Image</code> — Relación inversa <code>morphTo</code></h2>
+    <pre>// app/Models/Image.php
+public function imageable()
+{
+    return $this->morphTo();
+}</pre>
+
+    <h2>Funcionamiento en la base de datos</h2>
+    <p>
+      Cuando se crea o actualiza un contacto enviando el campo <code>image_url</code>, el controlador
+      registra automáticamente la fila en la tabla <code>images</code> con:
+    </p>
+    <ul>
+      <li><code>imageable_type = "App\Models\User"</code> — identifica a qué modelo pertenece</li>
+      <li><code>imageable_id</code> — el ID del usuario propietario de la imagen</li>
+      <li><code>url</code> — la URL de la imagen de perfil (e.g., de picsum.photos)</li>
+    </ul>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 6 – EVIDENCIAS
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>6. Evidencias del Funcionamiento</h1>
+    <hr>
+
+    <!-- 6.1 Docker -->
+    <h2>6.1 Entorno Docker</h2>
+    <p>
+      El backend <strong>red_app</strong> se ejecuta mediante <strong>Laravel Sail</strong> dentro de
+      contenedores Docker. En la siguiente captura se observan los tres servicios activos:
+      <code>laravel.test-1</code> (servidor PHP en el puerto 8080), <code>pgsql-1</code> (PostgreSQL
+      en el puerto 5439) y <code>mysql-1</code>.
+    </p>
+
+    <figure>
+      <img src="img/01_docker.png" alt="Docker Desktop mostrando contenedores activos de red_app" />
+      <figcaption>
+        <strong>Figura 1.</strong> Docker Desktop — Contenedores <em>red_app</em>, <em>pgsql-1</em>
+        y <em>laravel.test-1</em> en estado Running.
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="page">
+    <!-- 6.2 Postman -->
+    <h2>6.2 API REST – Postman</h2>
+
+    <h3>GET /api/users — Listado de contactos</h3>
+    <p>
+      La petición <code>GET http://localhost:8080/api/users</code> retorna el arreglo completo de
+      usuarios registrados en PostgreSQL. La respuesta llega sin envoltura de clave
+      <code>data</code> gracias a <code>JsonResource::withoutWrapping()</code>, con código
+      <strong>200 OK</strong> y tamaño de 3.83 KB.
+    </p>
+    <figure>
+      <img src="img/02_get.png" alt="Postman GET /api/users respuesta 200 OK" />
+      <figcaption>
+        <strong>Figura 2.</strong> Postman — <code>GET /api/users</code> · Status 200 OK ·
+        Respuesta JSON con campos <em>id, name, email, phone_number, image_url</em>.
+      </figcaption>
+    </figure>
+
+    <h3>POST /api/users — Creación de contacto</h3>
+    <p>
+      La petición <code>POST http://localhost:8080/api/users</code> con el cuerpo JSON
+      <code>&#123;"name":"Jovanny","email":"jovanny@gmail.com","password":"12345678"&#125;</code>
+      crea el contacto en PostgreSQL y retorna el objeto creado con su ID asignado por el servidor
+      (<code>id: 16</code>), código <strong>201 Created</strong>.
+    </p>
+    <figure>
+      <img src="img/03_post.png" alt="Postman POST /api/users respuesta 201 Created" />
+      <figcaption>
+        <strong>Figura 3.</strong> Postman — <code>POST /api/users</code> · Status 201 Created ·
+        Contacto "Jovanny" creado con <em>id: 16</em>.
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="page">
+    <h3>PUT /api/users/16 — Actualización de contacto</h3>
+    <p>
+      La petición <code>PUT http://localhost:8080/api/users/16</code> actualiza el nombre del
+      contacto de "Jovanny" a "Jova" y modifica su email. La respuesta regresa el objeto actualizado
+      con código <strong>200 OK</strong>, confirmando que el campo <code>updated_at</code> fue
+      modificado correctamente.
+    </p>
+    <figure>
+      <img src="img/04_put.png" alt="Postman PUT /api/users/16 respuesta 200 OK" />
+      <figcaption>
+        <strong>Figura 4.</strong> Postman — <code>PUT /api/users/16</code> · Status 200 OK ·
+        Contacto actualizado: nombre "Jova", email "jovay@gmail.com".
+      </figcaption>
+    </figure>
+
+    <!-- 6.3 App Online -->
+    <h2>6.3 Aplicación Android (Modo Online)</h2>
+    <p>
+      Con conexión a Internet activa, la aplicación descarga los contactos de la API de Laravel y
+      los muestra ordenados alfabéticamente por inicial. Las fotos de perfil se cargan desde las
+      URLs polimórficas almacenadas en la tabla <code>images</code> del servidor.
+    </p>
+    <figure>
+      <img src="img/05_app_online.png" alt="App Android mostrando lista de contactos en modo online"
+        style="max-height:420px;" />
+      <figcaption>
+        <strong>Figura 5.</strong> App <em>Mis Contactos</em> — Lista de contactos sincronizados
+        con la API, con fotos e iconos de llamada. Sin banner de advertencia (conexión activa).
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="page">
+    <!-- 6.4 Offline -->
+    <h2>6.4 Modo Offline — Creación de Contacto sin Internet</h2>
+    <p>
+      Para demostrar el funcionamiento offline, se activó el <strong>Modo Avión</strong> en el
+      emulador Pixel 8 API 34 mediante el panel de notificaciones. Inmediatamente la app detecta la
+      pérdida de conectividad a través del <code>NetworkMonitor</code> y muestra un
+      <strong>banner rojo animado</strong> en la parte superior de la pantalla.
+    </p>
+
+    <div class="fig-pair">
+      <figure>
+        <img src="img/06_airplane.png" alt="Emulador con Modo Avión activado" />
+        <figcaption>
+          <strong>Figura 6.</strong> Panel de ajustes rápidos del emulador —
+          <em>Airplane mode On</em> activado.
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="img/07_form.png" alt="Formulario Registrar Contacto con datos de Viviana" />
+        <figcaption>
+          <strong>Figura 7.</strong> Formulario <em>Registrar Contacto</em> —
+          Datos de Viviana Hernández ingresados sin conexión.
+        </figcaption>
+      </figure>
+    </div>
+
+    <p>
+      Al guardar, el contacto <strong>Viviana</strong> aparece inmediatamente en la lista de
+      contactos con su número de teléfono (<code>7718954521</code>) y el banner rojo
+      <em>"Sin conexión · Los cambios se sincronizarán al reconectarse"</em> permanece visible,
+      indicando que la acción está pendiente de sincronización.
+    </p>
+
+    <figure>
+      <img src="img/08_offline_list.png" alt="App mostrando banner rojo y contacto Viviana en la lista"
+        style="max-height:420px;" />
+      <figcaption>
+        <strong>Figura 8.</strong> Lista de contactos en modo offline — Banner rojo activo y
+        "Viviana" visible al instante gracias a la persistencia local en Room.
+      </figcaption>
+    </figure>
+  </div>
+
+  <div class="page">
+    <!-- 6.5 DB Inspector -->
+    <h2>6.5 Base de Datos Local y Cola de Sincronización</h2>
+    <p>
+      Mediante el <strong>Database Inspector</strong> de Android Studio se inspeccionan en tiempo
+      real las tablas de la base de datos Room del emulador. La tabla <code>contacts</code> muestra
+      a Viviana con <code>id = -1</code> (ID negativo temporal para evitar colisiones con el
+      servidor) y la tabla <code>sync_actions</code> muestra la acción encolada.
+    </p>
+
+    <div class="fig-pair">
+      <figure>
+        <img src="img/09_db_contacts.png" alt="Database Inspector tabla contacts con Viviana en id=-1" />
+        <figcaption>
+          <strong>Figura 9.</strong> Tabla <code>contacts</code> — Viviana en <code>id = -1</code>
+          (ID negativo offline), los demás contactos con IDs positivos del servidor.
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="img/10_sync_queue.png" alt="Database Inspector tabla sync_actions con acción PENDING" />
+        <figcaption>
+          <strong>Figura 10.</strong> Tabla <code>sync_actions</code> —
+          <code>action = CREATE</code>, <code>contactLocalId = -1</code>,
+          <code>status = PENDING</code>.
+        </figcaption>
+      </figure>
+    </div>
+
+    <div class="info-box">
+      <strong>Lectura de la evidencia:</strong><br>
+      • <code>id = -1</code> en <code>contacts</code> → Contacto creado localmente sin enviar a la API.<br>
+      • <code>contactLocalId = -1</code> en <code>sync_actions</code> → La cola sabe que debe subir
+      este contacto cuando regrese la red.<br>
+      • <code>status = PENDING</code> → Aún no se ha procesado porque el dispositivo estaba offline.<br>
+      • <code>retryCount = 0</code> → Primer intento pendiente, sin reintentos previos.
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- 6.6 Post-Sync -->
+    <h2>6.6 Sincronización Automática al Reconectarse</h2>
+    <p>
+      Al desactivar el Modo Avión, el <code>NetworkMonitor</code> detecta la reconexión y dispara
+      <code>SyncScheduler.syncNow()</code> automáticamente. El <code>SyncWorker</code> procesa la
+      cola: envía el contacto Viviana a la API (<code>POST /api/users</code>), recibe el ID
+      definitivo del servidor (<code>id = 17</code>), reemplaza la fila local con <code>id = -1</code>
+      y vacía la cola.
+    </p>
+
+    <figure>
+      <img src="img/11_online_after_sync.png" alt="App sin banner rojo con Viviana sincronizada"
+        style="max-height:380px;" />
+      <figcaption>
+        <strong>Figura 11.</strong> App <em>Mis Contactos</em> tras la sincronización — El banner
+        rojo desapareció y Viviana permanece en la lista con su ID definitivo del servidor.
+      </figcaption>
+    </figure>
+
+    <div class="fig-pair">
+      <figure>
+        <img src="img/12_db_after_sync.png" alt="Tabla contacts con Viviana en id=17 positivo" />
+        <figcaption>
+          <strong>Figura 12.</strong> Tabla <code>contacts</code> post-sincronización —
+          Viviana ahora tiene <code>id = 17</code> (ID real del servidor PostgreSQL).
+        </figcaption>
+      </figure>
+      <figure>
+        <img src="img/13_queue_empty.png" alt="Tabla sync_actions vacía después de sincronización exitosa" />
+        <figcaption>
+          <strong>Figura 13.</strong> Tabla <code>sync_actions</code> — <em>Table is empty</em>.
+          La acción fue procesada exitosamente y limpiada por <code>clearCompleted()</code>.
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div class="page">
+    <!-- 6.7 Imágenes Polimórficas -->
+    <h2>6.7 Tabla <code>images</code> — Relación Polimórfica en PostgreSQL</h2>
+    <p>
+      La consulta a la tabla <code>images</code> de PostgreSQL (realizada con DBeaver conectado a
+      <code>localhost:5439</code>) demuestra que cada imagen de perfil está correctamente vinculada
+      a su usuario mediante las columnas polimórficas.
+    </p>
+
+    <figure>
+      <img src="img/14_images_table.png" alt="Tabla images en DBeaver con imageable_id e imageable_type" />
+      <figcaption>
+        <strong>Figura 14.</strong> Tabla <code>images</code> en PostgreSQL (DBeaver) —
+        15 filas donde <code>imageable_type = 'App\Models\User'</code> e
+        <code>imageable_id</code> corresponde al ID del usuario propietario de cada imagen.
+      </figcaption>
+    </figure>
+
+    <div class="info-box">
+      <strong>Lectura de la evidencia:</strong><br>
+      • <code>imageable_type = "App\Models\User"</code> → Laravel identifica que esta imagen
+      pertenece al modelo <code>User</code>.<br>
+      • <code>imageable_id</code> → Referencia al campo <code>id</code> de la tabla
+      <code>users</code>. Cada usuario tiene su propia imagen de perfil asociada.<br>
+      • <code>url</code> → URL de la imagen (en este caso de <em>picsum.photos</em>).<br>
+      • Esta estructura permite en el futuro asociar imágenes a cualquier otro modelo (empresa,
+      grupo, etc.) sin modificar la tabla <code>images</code>.
+    </div>
+  </div>
+
+
+  <!-- ═══════════════════════════════════════════════════════════
+     SECCIÓN 7 – CONCLUSIONES
+════════════════════════════════════════════════════════════ -->
+  <div class="page">
+    <h1>7. Conclusiones</h1>
+    <hr>
+
+    <p>
+      La implementación de la aplicación <strong>Mis Contactos</strong> demostró en la práctica la
+      viabilidad y robustez del patrón <em>Local-First</em> en el desarrollo móvil moderno.
+      A través de la integración de <strong>Room SQLite</strong> como fuente de verdad primaria y
+      <strong>WorkManager</strong> como motor de sincronización en segundo plano, se logró un sistema
+      que funciona de manera transparente para el usuario, independientemente del estado de su conexión.
+    </p>
+
+    <p>
+      La estrategia de <strong>IDs negativos temporales</strong> para contactos creados offline
+      resolvió de forma elegante el problema de colisión de identificadores entre la base de datos
+      local y el servidor remoto, garantizando la integridad de los datos durante el proceso de
+      sincronización.
+    </p>
+
+    <p>
+      Por su parte, la <strong>relación polimórfica</strong> implementada en Laravel entre los modelos
+      <code>User</code> e <code>Image</code> mediante las columnas <code>imageable_id</code> e
+      <code>imageable_type</code> demostró ser una solución flexible y escalable para la gestión de
+      recursos multimedia, permitiendo que la misma tabla de imágenes pueda servir a múltiples
+      modelos sin duplicar estructuras de datos.
+    </p>
+
+    <p>
+      Finalmente, la arquitectura basada en contenedores Docker con Laravel Sail simplificó
+      enormemente la configuración del entorno de desarrollo, garantizando reproducibilidad y
+      consistencia entre diferentes máquinas de desarrollo.
+    </p>
+
+    <br>
+    <p>
+      Los cinco endpoints de la API REST (<code>GET</code>, <code>POST</code>, <code>PUT</code>,
+      <code>PATCH</code>, <code>DELETE</code>) fueron consumidos correctamente por la app Android,
+      cumpliendo con todos los criterios de evaluación establecidos en la práctica.
+    </p>
+  </div>
+
+</body>
+
+</html>
