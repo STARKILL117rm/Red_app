@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Validation\Rule;
 
 class UserController extends Controller
@@ -45,7 +46,9 @@ class UserController extends Controller
 
         // Si se envía una URL de imagen, crear el registro polimórfico
         if (!empty($validated['image_url'])) {
-            $user->image()->create(['url' => $validated['image_url']]);
+            $user->image()->create([
+                'url' => $validated['image_url']
+            ]);
         }
 
         return UserResource::make($user);
@@ -88,9 +91,13 @@ class UserController extends Controller
         // Actualizar o crear imagen polimórfica si se envió
         if ($imageUrl !== null) {
             if ($user->image) {
-                $user->image()->update(['url' => $imageUrl]);
+                $user->image()->update([
+                    'url' => $imageUrl
+                ]);
             } else {
-                $user->image()->create(['url' => $imageUrl]);
+                $user->image()->create([
+                    'url' => $imageUrl
+                ]);
             }
         }
 
@@ -100,12 +107,12 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(User $user): JsonResponse
+    public function destroy(User $user): Response
     {
-        $userName = $user->name;
-        // La imagen polimórfica se elimina en cascada por la FK
-        // Si no hay cascade configurado, la eliminamos manualmente:
-        $user->image()->delete();
+        if ($user->image) {
+            $user->image()->delete();
+        }
+
         $user->delete();
 
         return response()->noContent();
