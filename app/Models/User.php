@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany; // <-- Corregido: Importamos MorphMany en lugar de MorphOne
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
@@ -49,10 +49,10 @@ class User extends Authenticatable
 
     /**
      * Relación polimórfica con Image.
-     * Un usuario puede tener una imagen de perfil.
+     * Un usuario puede tener múltiples imágenes asociadas (galería/carrusel).
      */
-    public function image(): MorphOne
+    public function images(): MorphMany // <-- Agregamos el tipo de retorno correcto
     {
-        return $this->morphOne(Image::class, 'imageable');
+        return $this->morphMany(Image::class, 'imageable'); 
     }
 }
